@@ -1,0 +1,30 @@
+[package]
+name = "artimonist-wasm"
+version = "0.1.0"
+description = "A tool for generating mnemonics based on diagrams."
+authors = ["Artimonist <artimonist@gmail.com>"]
+homepage = "https://artimonist.org/"
+repository = "https://github.com/artimonist/artimonist-web/"
+
+license = "MIT"
+keywords = ["bitcoin", "mnemonic"]
+categories = ["cryptography"]
+rust-version = "1.84.0"
+edition = "2021"
+
+[dependencies]
+wasm-bindgen = "0.2"
+artimonist = "0.6.0"
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+lto = true
+opt-level = 'z'
+
+[package.metadata.wasm-pack.profile.profiling]
+wasm-opt = ['-O']
+
+# [package.metadata.wasm-pack.profile.release]
+# wasm-opt = false

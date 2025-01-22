@@ -1,0 +1,205 @@
+body {
+  color: #333;
+  background-color: #fff;
+  padding-bottom: 32px;
+  font-family: "Helvetica Neue";
+}
+
+.container {
+  text-align: center;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+header {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 48px;
+  font-weight: 500;
+}
+
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #eee;
+}
+
+/*
+ * diagram area
+ */
+.diagram {
+  display: inline-grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  place-content: center;
+  gap: 3px;
+  border: 1px solid #e5e4e9;
+}
+
+.cell {
+  width: 60px;
+  height: 45px;
+  resize: none;
+  font-size: 36px;
+  text-align: center;
+  line-height: 100%;
+
+  overflow: hidden;
+  border: 1px solid #e5e4e9;
+  border-radius: 5px;
+  padding-top: 12px;
+}
+
+.cell:hover {
+  box-shadow: 5px 5px 10px #aaaaaa, -5px -5px 10px #ffffff;
+}
+
+/* division cells */
+.cell.division {
+  background-color: #f5f5f5;
+}
+
+/* cell filled */
+.cell:not(:placeholder-shown) {
+  box-shadow: inset -1px -1px 3px #ffffff, inset 1px 1px 3px #aaaaaa;
+  /* background-image: url("data:image/svg+xml;utf8, <svg xmlns='http://www.w3.org/2000/svg' version='1.1' \
+    height='150px' width='120px'> <text x='30' y='80' fill='gray' font-size='10' >\\u{FFFFFF}</text></svg>"); */
+}
+
+/*
+ * salt area
+ */
+.salt {
+  margin-top: 20px;
+  font-size: 12px;
+}
+
+#salt {
+  width: 380px;
+  height: 35px;
+  padding-left: 5px;
+  text-overflow: ellipsis;
+  font-size: large;
+  border-width: 2px;
+  border-radius: 6px;
+}
+
+.salt button {
+  margin-left: 12px;
+  padding: 5px;
+  vertical-align: top;
+  margin-top: 5px;
+}
+
+#salt:focus {
+  border-width: 1px;
+}
+
+#salt:valid {
+  border-color: #e5e4e9;
+  box-shadow: inset -1px -1px 3px #ffffff, inset 1px 1px 3px #aaaaaa;
+}
+
+#salt:invalid,
+#salt.invalid {
+  border-color: #ffc0c0;
+  border-width: 3px;
+  box-shadow: 5px 5px 10px #ff5050, -5px -5px 10px #ffffff;
+}
+
+/*
+ * sections
+ */
+section {
+  text-align: left;
+  margin-top: 20px;
+}
+
+/* mnemonic */
+.mnemonic {
+  width: 100%;
+  border: none;
+  border-collapse: collapse;
+  display: none;
+}
+
+.mnemonic tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+
+.mnemonic td {
+  padding: 15px;
+  font-size: 16px;
+}
+
+/* wallet */
+.wallet {
+  width: 100%;
+  border: none;
+  border-collapse: collapse;
+  display: none;
+}
+
+.wallet th {
+  text-align: center;
+}
+
+.wallet tr:nth-child(even) {
+  background: #f5f5f5;
+}
+
+.wallet td {
+  padding: 15px;
+  font-size: 16px;
+}
+
+.wallet td:nth-child(1) {
+  text-align: center;
+  width: 25px;
+}
+
+/* hd-wallet */
+.hd-wallet {
+  width: 100%;
+  border: none;
+  border-collapse: collapse;
+  display: none;
+}
+
+.hd-wallet tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+
+.hd-wallet td {
+  padding: 15px;
+  font-size: 16px;
+}
+
+/* pwd */
+.pwd {
+  width: 100%;
+  border: none;
+  border-collapse: collapse;
+  display: none;
+}
+
+.pwd tr:nth-child(even) {
+  background: #f5f5f5;
+}
+
+.pwd th {
+  text-align: center;
+}
+
+.pwd td {
+  padding: 15px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.pwd td:first-child {
+  width: 25px;
+}

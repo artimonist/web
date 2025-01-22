@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Artimonist</title>
+  <link rel="stylesheet" href="simple.css" />
+  <script src="js/jquery-3.7.1.min.js"></script>
+  <script type="module">
+    import init, { simple_init, mnemonic_list, wallet_list, xpriv_list, pwd_list } from './js/artimonist_wasm.js';
+    async function run() {
+      await init();
+    }
+    run();
+
+    function generate() {
+      $('.mnemonic,.wallet,.hd-wallet,.pwd').hide();
+
+      // collect items
+      let [vs, rs, cs] = [[], [], []];
+      Array.from($('.diagram>textarea')).forEach(function (e, i) {
+        if (Array.from(e.value).length > 0) {
+          vs.push(e.value);
+          rs.push(Math.trunc(i / 7));
+          cs.push(i % 7);
+        }
+      });
+      let salt = $('#salt').val() || '';
+
+      try {
+        // init diagram
+        simple_init(vs, rs, cs, salt);
+      } catch (e) {
+        alert(e);
+        return;
+      }
+
+      // fill results
+      let mnemonics = Array.from(mnemonic_list());
+      for (let [i, td] of Array.from($('.mnemonic td')).entries()) {
+        $(td).text(mnemonics[i]);
+      }
+      $('.mnemonic').show();
+
+      let wallets = Array.from(wallet_list(1, 3));
+      for (let [i, tr] of Array.from($('.wallet tr:has(td)')).entries()) {
+        let ws = wallets[i].split(',');
+        $(tr).children(':nth(1)').text(ws[0]);
+        $(tr).children(':nth(2)').text(ws[1]);
+      }
+      $('.wallet').show();
+
+      let xpriv = xpriv_list(1, 1);
+      $('.hd-wallet td').text(xpriv);
+      $('.hd-wallet').show();
+
+      let distinct = pwd_list(1, 1, 5);
+      let mixture = pwd_list(3, 1, 5);
+      for (let [i, tr] of Array.from($('.pwd tr:has(td)')).entries()) {
+        $(tr).children(':nth(1)').text(distinct[i]);
+        $(tr).children(':nth(2)').text(mixture[i]);
+      }
+      $('.pwd').show();
+    }
+    window.generate = generate;
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <header>Artimonist</header>
+    <hr>
+    <div class="diagram">
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell division">🎈</textarea>
+      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+    </div>
+    <div class="salt">
+      <div></div>
+      <input id="salt" type="text" minlength="5" maxlength="255" required autofocus
+        title="🔑Passphrase as salt: at least 5 characters" placeholder="🔑Passphrase as salt: at least 5 characters" />
+      <button id="generate" disabled onclick="generate()">Generate</button>
+    </div>
+    <script>
+      // cells input event handler
+      $(".diagram>textarea")
+        .on("change", function (evt) {
+          // limit characters count to 1
+          let s = evt.target.value;
+          if (Array.from(s).length > 1) {
+            evt.target.value = Array.from(s).slice(0, 1).join("");
+          }
+          $('.mnemonic,.wallet,.hd-wallet,.pwd').hide();
+        });
+      $("#salt").on("change", function (evt) {
+        let s = evt.target.value;
+        if (Array.from(s).length < 5) {
+          $(evt.target).addClass("invalid");
+          $('#generate').attr('disabled', true);
+          return;
+        } else {
+          $(evt.target).removeClass("invalid");
+          $('#generate').attr('disabled', false);
+        }
+        $('.mnemonic,.wallet,.hd-wallet,.pwd').hide();
+      });
+    </script>
+    <hr>
+    <section>
+      <h3>Mnemonics</h3>
+      <table class="mnemonic">
+        <tr>
+          <td>
+            melody stove spell vessel gold cricket public ensure family seek piano mechanic trap truck roast bind
+            alley donor runway miracle entry crop act vocal
+          </td>
+        </tr>
+        <tr>
+          <td>
+            melody stove spell vessel gold cricket public ensure family seek piano mechanic trap truck roast bind
+            alley donor runway miracle entry
+          </td>
+        </tr>
+        <tr>
+          <td>
+            melody stove spell vessel gold cricket public ensure family seek piano mechanic trap truck roast bind
+            alley donor
+          </td>
+        </tr>
+      </table>
+    </section>
+    <hr>
+    <section>
+      <h3>Wallets</h3>
+      <table class="wallet">
+        <tr>
+          <th>Serial</th>
+          <th>Address</th>
+          <th>Private</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>38FPFdaGWejCRawvsCbSiuj8AgAJGJ1vNz</td>
+          <td>KzWLnHF5ESw43o6Uy4ZCixVT8LEA4cQnF3m47FQp6WwBn3QzmbsZ</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>3QRD7qGyF2QAXrRiRuCr6H2D4DEXLRicco</td>
+          <td>KxpzGv35MPYLFammP7hqGgGCc81g6Gx5cYfLRapPURmSS9oEPJxT </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>35vpqRzaJ83G2DpRBSrWaaN3ELWfNB3BCZ</td>
+          <td>L1uXQySss2vSkJf6BvqLwjFemwqgKawtKToW922paWrcrV95Vs6P </td>
+        </tr>
+      </table>
+    </section>
+    <hr>
+    <section>
+      <h3>HD-Wallets</h3>
+      <table class="hd-wallet">
+        <tr>
+          <td>
+            xprv9s21ZrQH143K26RCtmAMZxtw7UJ9EzVwVtftmszx9y1LC4PktDeFNAXFT7Qwdpy1vQHkV5fiRxUbX8NznqvkKJQaU5Nj74hzERT8mdcmPw5
+          </td>
+        </tr>
+      </table>
+    </section>
+    <hr>
+    <section>
+      <h3>Passwords</h3>
+      <table class="pwd">
+        <tr>
+          <th>Serial</th>
+          <th>Distinct</th>
+          <th>Mixture</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>FtbFj#LWmrsK@n$UhpK1</td>
+          <td>🐬🐍🏠😍🌻⚡🐍✋🚗🌴🍟🎈🏠💧🌈🍌🔑🌙🐸🌴</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>FtbFj#LWmrsK@n$UhpK1</td>
+          <td>🐬🐍🏠😍🌻⚡🐍✋🚗🌴🍟🎈🏠💧🌈🍌🔑🌙🐸🌴</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>FtbFj#LWmrsK@n$UhpK1</td>
+          <td>🐬🐍🏠😍🌻⚡🐍✋🚗🌴🍟🎈🏠💧🌈🍌🔑🌙🐸🌴</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>FtbFj#LWmrsK@n$UhpK1</td>
+          <td>🐬🐍🏠😍🌻⚡🐍✋🚗🌴🍟🎈🏠💧🌈🍌🔑🌙🐸🌴</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>FtbFj#LWmrsK@n$UhpK1</td>
+          <td>🐬🐍🏠😍🌻⚡🐍✋🚗🌴🍟🎈🏠💧🌈🍌🔑🌙🐸🌴</td>
+        </tr>
+      </table>
+    </section>
+    <hr>
+
+  </div>
+  <script>
+    $(document).ready(function () {
+      var cells = $("#diagram>textarea");
+    });
+  </script>
+</body>
+
+</html>
