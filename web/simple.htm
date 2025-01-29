@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Artimonist</title>
+  <title>Artimonist - A tool for generating mnemonics based on diagrams.</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="simple.css" />
   <script src="js/jquery-3.7.1.min.js"></script>
   <script type="module">
@@ -14,11 +15,11 @@
     run();
 
     function generate() {
-      $('.mnemonic,.wallet,.hd-wallet,.pwd').hide();
+      $('.result table').hide();
 
       // collect items
       let [vs, rs, cs] = [[], [], []];
-      Array.from($('.diagram>textarea')).forEach(function (e, i) {
+      Array.from($('.cell')).forEach(function (e, i) {
         if (Array.from(e.value).length > 0) {
           vs.push(e.value);
           rs.push(Math.trunc(i / 7));
@@ -27,8 +28,8 @@
       });
       let salt = $('#salt').val() || '';
 
+      // init diagram
       try {
-        // init diagram
         simple_init(vs, rs, cs, salt);
       } catch (e) {
         alert(e);
@@ -71,112 +72,105 @@
     <header>Artimonist</header>
     <hr>
     <div class="diagram">
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell division"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
-      <textarea maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell division"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
+      <textarea required maxlength="2" placeholder=" " class="cell"></textarea>
     </div>
     <div class="salt">
       <div></div>
-      <input id="salt" type="text" minlength="5" maxlength="255" required autofocus
-        title="🔑Passphrase as salt: at least 5 characters" placeholder="🔑Passphrase as salt: at least 5 characters" />
+      <input id="salt" type="text" minlength="5" maxlength="255" required autofocus title="Passphrase as salt"
+        placeholder="🔑Passphrase: at least 5 characters" />
       <button id="generate" disabled onclick="generate()">Generate</button>
     </div>
     <script>
-      // cells input event handler
-      $(".diagram>textarea")
-        .on("change", function (evt) {
-          // limit characters count to 1
-          let s = evt.target.value;
-          if (Array.from(s).length > 1) {
-            evt.target.value = Array.from(s).slice(0, 1).join("");
+      let unicode_length = (s) => Array.from(s ?? '').length;
+      // cells & salt changing handler
+      $(".cell")
+        .on("input", function (evt) {
+          // cell can be filled with only one character.
+          let t = evt.target;
+          if (unicode_length(t.value) > 1) {
+            t.value = Array.from(t.value).slice(0, 1).join("");
           }
-          $('.mnemonic,.wallet,.hd-wallet,.pwd').hide();
         });
-      $("#salt").on("change", function (evt) {
-        let s = evt.target.value;
-        if (Array.from(s).length < 5) {
-          $(evt.target).addClass("invalid");
-          $('#generate').attr('disabled', true);
-          return;
-        } else {
-          $(evt.target).removeClass("invalid");
-          $('#generate').attr('disabled', false);
-        }
-        $('.mnemonic,.wallet,.hd-wallet,.pwd').hide();
+      $("#salt").on("input", function (evt) {
+        // salt at least 5 characters.
+        let t = evt.target;
+        unicode_length(t.value) < 5 ? $(t).addClass("invalid") : $(t).removeClass("invalid");
+      });
+      $('.cell,#salt').on('input', function (evt) {
+        // generate valid when diagram is not empty and salt valid.
+        let disable = $('.cell:valid').length < 1 || unicode_length($('#salt').val()) < 5;
+        $('#generate').attr('disabled', disable);
+        $('.result table').hide();
       });
     </script>
     <hr>
-    <section>
+    <section class="result">
       <h3>Mnemonics</h3>
       <table class="mnemonic">
         <tr>
           <td>
-            melody stove spell vessel gold cricket public ensure family seek piano mechanic trap truck roast bind
-            alley donor runway miracle entry crop act vocal
           </td>
         </tr>
         <tr>
           <td>
-            melody stove spell vessel gold cricket public ensure family seek piano mechanic trap truck roast bind
-            alley donor runway miracle entry
           </td>
         </tr>
         <tr>
           <td>
-            melody stove spell vessel gold cricket public ensure family seek piano mechanic trap truck roast bind
-            alley donor
           </td>
         </tr>
       </table>
     </section>
     <hr>
-    <section>
+    <section class="result">
       <h3>Wallets</h3>
       <table class="wallet">
         <tr>
@@ -186,34 +180,33 @@
         </tr>
         <tr>
           <td>1</td>
-          <td>38FPFdaGWejCRawvsCbSiuj8AgAJGJ1vNz</td>
-          <td>KzWLnHF5ESw43o6Uy4ZCixVT8LEA4cQnF3m47FQp6WwBn3QzmbsZ</td>
+          <td></td>
+          <td></td>
         </tr>
         <tr>
           <td>2</td>
-          <td>3QRD7qGyF2QAXrRiRuCr6H2D4DEXLRicco</td>
-          <td>KxpzGv35MPYLFammP7hqGgGCc81g6Gx5cYfLRapPURmSS9oEPJxT </td>
+          <td></td>
+          <td> </td>
         </tr>
         <tr>
           <td>3</td>
-          <td>35vpqRzaJ83G2DpRBSrWaaN3ELWfNB3BCZ</td>
-          <td>L1uXQySss2vSkJf6BvqLwjFemwqgKawtKToW922paWrcrV95Vs6P </td>
+          <td></td>
+          <td> </td>
         </tr>
       </table>
     </section>
     <hr>
-    <section>
+    <section class="result">
       <h3>HD-Wallets</h3>
       <table class="hd-wallet">
         <tr>
           <td>
-            xprv9s21ZrQH143K26RCtmAMZxtw7UJ9EzVwVtftmszx9y1LC4PktDeFNAXFT7Qwdpy1vQHkV5fiRxUbX8NznqvkKJQaU5Nj74hzERT8mdcmPw5
           </td>
         </tr>
       </table>
     </section>
     <hr>
-    <section>
+    <section class="result">
       <h3>Passwords</h3>
       <table class="pwd">
         <tr>
@@ -223,39 +216,34 @@
         </tr>
         <tr>
           <td>1</td>
-          <td>FtbFj#LWmrsK@n$UhpK1</td>
-          <td>🐬🐍🏠😍🌻⚡🐍✋🚗🌴🍟🎈🏠💧🌈🍌🔑🌙🐸🌴</td>
+          <td></td>
+          <td></td>
         </tr>
         <tr>
           <td>2</td>
-          <td>FtbFj#LWmrsK@n$UhpK1</td>
-          <td>🐬🐍🏠😍🌻⚡🐍✋🚗🌴🍟🎈🏠💧🌈🍌🔑🌙🐸🌴</td>
+          <td></td>
+          <td></td>
         </tr>
         <tr>
           <td>3</td>
-          <td>FtbFj#LWmrsK@n$UhpK1</td>
-          <td>🐬🐍🏠😍🌻⚡🐍✋🚗🌴🍟🎈🏠💧🌈🍌🔑🌙🐸🌴</td>
+          <td></td>
+          <td></td>
         </tr>
         <tr>
           <td>4</td>
-          <td>FtbFj#LWmrsK@n$UhpK1</td>
-          <td>🐬🐍🏠😍🌻⚡🐍✋🚗🌴🍟🎈🏠💧🌈🍌🔑🌙🐸🌴</td>
+          <td></td>
+          <td></td>
         </tr>
         <tr>
           <td>5</td>
-          <td>FtbFj#LWmrsK@n$UhpK1</td>
-          <td>🐬🐍🏠😍🌻⚡🐍✋🚗🌴🍟🎈🏠💧🌈🍌🔑🌙🐸🌴</td>
+          <td></td>
+          <td></td>
         </tr>
       </table>
     </section>
     <hr>
 
   </div>
-  <script>
-    $(document).ready(function () {
-      var cells = $("#diagram>textarea");
-    });
-  </script>
 </body>
 
 </html>

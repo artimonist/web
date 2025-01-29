@@ -22,3 +22,4 @@ Cargo.lock
 
 # Wasm-pack output
 pkg/
+bin/

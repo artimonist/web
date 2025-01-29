@@ -40,17 +40,19 @@ hr {
 }
 
 .cell {
-  width: 60px;
-  height: 45px;
+  width: 120px;
+  height: 60px;
   resize: none;
-  font-size: 36px;
   text-align: center;
-  line-height: 100%;
 
   overflow: hidden;
   border: 1px solid #e5e4e9;
   border-radius: 5px;
-  padding-top: 12px;
+  padding-top: 10px;
+
+  font-size: 36px;
+  line-height: 1.2;
+  text-wrap-style: pretty;
 }
 
 .cell:hover {
@@ -76,7 +78,7 @@ hr {
 }
 
 #salt {
-  width: 380px;
+  width: 680px;
   height: 35px;
   padding-left: 5px;
   text-overflow: ellipsis;
