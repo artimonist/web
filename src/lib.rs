@@ -1,4 +1,4 @@
-use artimonist::{Diagram, Password, SimpleDiagram, Xpriv, BIP85};
+use artimonist::{ComplexDiagram, Diagram, Password, SimpleDiagram, Xpriv, BIP85};
 use std::{str::FromStr, sync::RwLock};
 use wasm_bindgen::prelude::*;
 
@@ -16,6 +16,25 @@ pub fn simple_init(
         let items: Vec<_> = values.into_iter().map(|s| s.chars().next()).collect();
         let indices: Vec<_> = indices_x.into_iter().zip(indices_y).collect();
         let diagram = SimpleDiagram::from_items(items, &indices).expect_throw("invalid parameters");
+        diagram
+            .to_master(salt.as_bytes())
+            .expect_throw("message error")
+    };
+    let mut master_mut = MASTER_KEY.write().unwrap();
+    *master_mut = master.to_string();
+}
+
+#[wasm_bindgen]
+pub fn complex_init(
+    values: Vec<String>,
+    indices_x: Vec<usize>,
+    indices_y: Vec<usize>,
+    salt: String,
+) {
+    let master = {
+        let indices: Vec<_> = indices_x.into_iter().zip(indices_y).collect();
+        let diagram =
+            ComplexDiagram::from_items(values, &indices).expect_throw("invalid parameters");
         diagram
             .to_master(salt.as_bytes())
             .expect_throw("message error")

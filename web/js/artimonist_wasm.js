@@ -137,6 +137,24 @@ export function simple_init(values, indices_x, indices_y, salt) {
     wasm.simple_init(ptr0, len0, ptr1, len1, ptr2, len2, ptr3, len3);
 }
 
+/**
+ * @param {string[]} values
+ * @param {Uint32Array} indices_x
+ * @param {Uint32Array} indices_y
+ * @param {string} salt
+ */
+export function complex_init(values, indices_x, indices_y, salt) {
+    const ptr0 = passArrayJsValueToWasm0(values, wasm.__wbindgen_malloc);
+    const len0 = WASM_VECTOR_LEN;
+    const ptr1 = passArray32ToWasm0(indices_x, wasm.__wbindgen_malloc);
+    const len1 = WASM_VECTOR_LEN;
+    const ptr2 = passArray32ToWasm0(indices_y, wasm.__wbindgen_malloc);
+    const len2 = WASM_VECTOR_LEN;
+    const ptr3 = passStringToWasm0(salt, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+    const len3 = WASM_VECTOR_LEN;
+    wasm.complex_init(ptr0, len0, ptr1, len1, ptr2, len2, ptr3, len3);
+}
+
 function getArrayJsValueFromWasm0(ptr, len) {
     ptr = ptr >>> 0;
     const mem = getDataViewMemory0();
