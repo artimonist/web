@@ -58,7 +58,10 @@ hr {
 }
 
 /* division cells */
-.cell.division {
+.cell:nth-of-type(7n+4),
+.cell:nth-of-type(n + 22):nth-of-type(-n + 28),
+.cell:nth-of-type(28n + 9),
+.cell:nth-of-type(28n + 13) {
   background-color: #f5f5f5;
 }
 
