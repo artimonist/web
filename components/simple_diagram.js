@@ -1,4 +1,4 @@
-const css = `
+var css = `
 :host {
   display: inline-grid;
   grid-template-columns: repeat(7, 1fr);
@@ -37,15 +37,15 @@ const css = `
     border: 1px solid red;
     padding: 3px 10px;
 }`;
-let cell = `<textarea required maxlength="2" placeholder=" " class="cell"></textarea>`;
+var cell = `<textarea required maxlength="2" placeholder=" " class="cell"></textarea>`;
 
-let template = document.createElement("template");
+var template = document.createElement("template");
 template.id = "SimpleDiagram";
 template.innerHTML = `<style>${css}</style>${cell.repeat(49)}`;
 document.body.append(template);
 
-const unicode_first = (s) => Array.from(s ?? '').length > 1 ? Array.from(s).slice(0, 1).join("") : s;
-const unicode_tip = (s) => s ? `\\u\{${s.codePointAt(0).toString(16)}\}` : ``;
+var unicode_first = (s) => Array.from(s ?? '').length > 1 ? Array.from(s).slice(0, 1).join("") : s;
+var unicode_tip = (s) => s ? `\\u\{${s.codePointAt(0).toString(16)}\}` : ``;
 
 class SimpleDiagram extends HTMLElement {
   constructor() {
@@ -69,6 +69,10 @@ class SimpleDiagram extends HTMLElement {
         new CustomEvent('onchange', { detail: e })
       );
     });
+  }
+
+  is_empty() {
+    return this.$cells.every(e => e.value === '');
   }
 
   get values() {

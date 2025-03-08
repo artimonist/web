@@ -7,9 +7,8 @@
 </head>
 
 <body>
-  <!-- <simple-diagram values='["1", "2", "3"]'></simple-diagram> -->
-  <complex-diagram values='["1", "2", "3"]'></complex-diagram>
-  </br>
+  <simple-diagram values='["1", "2", "3"]'></simple-diagram>
+  <complex-diagram values='["1", "2", "3"]' />
   <script>
     const diagram = document.querySelector('complex-diagram');
     diagram.addEventListener('onchange', e => {
@@ -20,6 +19,7 @@
     diagram.setAttribute('values', JSON.stringify(arr));
   </script>
   <script src="./complex_diagram.js"></script>
+  <script src="./simple_diagram.js"></script>
 
   <textarea maxlength=" 2" placeholder=" " class="cell" title="Buttom Tooltip"></textarea>
   <style>

@@ -1,4 +1,4 @@
-const css = `
+var css = `
 :host {
   display: inline-grid;
   grid-template-columns: repeat(7, 1fr);
@@ -34,18 +34,15 @@ const css = `
 .cell:valid {
   box-shadow: inset -1px -1px 3px #ffffff, inset 1px 1px 3px #aaaaaa;
 }`;
-let cell = `<textarea required maxlength="50" placeholder=" " class="cell" spellcheck="false"></textarea>`;
+var cell = `<textarea required maxlength="50" placeholder=" " class="cell" spellcheck="false"></textarea>`;
 
-let template = document.createElement("template");
+var template = document.createElement("template");
 template.id = "ComplexDiagram";
 template.innerHTML = `<style>${css}</style>${cell.repeat(49)}`;
 document.body.append(template);
 
-const unicode_limit = (s, n) => {
-  s = s.replace(/\r?\n/gi, ''); // prevent newline character, newlines are not allowed.
-  return Array.from(s ?? '').length > 1 ? Array.from(s).slice(0, n).join('') : s;
-}
-const unicode_tip = (s) => Array.from(s ?? '').map(c => `\\u\{${c.codePointAt(0).toString(16)}\}`).join('');
+var unicode_limit = (s, n) => Array.from(s ?? '').length > 1 ? Array.from(s).slice(0, n).join('') : s;
+var unicode_tip = (s) => Array.from(s ?? '').map(c => `\\u\{${c.codePointAt(0).toString(16)}\}`).join('');
 
 class ComplexDiagram extends HTMLElement {
   constructor() {
@@ -58,8 +55,10 @@ class ComplexDiagram extends HTMLElement {
     this.$cells = Array.from(shadow.querySelectorAll('.cell'));
 
     shadow.addEventListener('input', (e) => {
+      // prevent newline character, newlines are not allowed.
+      let s = e.target.value.replace(/\r?\n/gi, '');
       // limit characters length to 20. (most words are less than 20 characters in length)
-      e.target.value = unicode_limit(e.target.value, 20);
+      e.target.value = unicode_limit(s, 20);
       e.target.title = unicode_tip(e.target.value);
       // auto ajust font-size, none characters hide.
       let t = e.target;
